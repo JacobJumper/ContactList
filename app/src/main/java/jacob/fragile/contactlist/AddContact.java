@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
 
 public class AddContact extends AppCompatActivity{
 
+    private static final String TAG = "MyActivity";
+
     public static final String AGE_MESSAGE =
-            "com.jacob.fragile.contactlist.extra.MESSAGE";
+            "com.jacob.fragile.contactlist.extra.NAME_MESSAGE";
     public static final String NAME_MESSAGE =
-            "com.jacob.fragile.contactlist.extra.MESSAGE";
+            "com.jacob.fragile.contactlist.extra.AGE_MESSAGE";
     public static final String COLOR_MESSAGE =
-            "com.jacob.fragile.contactlist.extra.MESSAGE";
+            "com.jacob.fragile.contactlist.extra.COLOR_MESSAGE";
 
 
     private EditText nameEdit;
@@ -55,9 +58,10 @@ public class AddContact extends AppCompatActivity{
         String colorSpinnerValue = colorSpinner.getSelectedItem().toString();
 
        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(COLOR_MESSAGE, nameValue);
-        intent.putExtra(COLOR_MESSAGE, ageValue);
+        intent.putExtra(NAME_MESSAGE, nameValue);
+        intent.putExtra(AGE_MESSAGE, ageValue);
         intent.putExtra(COLOR_MESSAGE, colorSpinnerValue);
+        Log.d(TAG, "nameValue = " + nameValue);
         startActivity(intent);
 
     }

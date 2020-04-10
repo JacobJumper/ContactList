@@ -9,23 +9,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    SharedPreferences sharedpreferences;
-    public static final String mypreference = "mypref";
-    public static final String Name = "nameKey";
-    public static final String Age = "ageKey";
-    public static final String Color = "colorKey";
-
-
+    public static final String TAG = "RecyclerViewAdapter";
 
     private ArrayList<Contacts> mContacts;
     private RecyclerView mRecyclerView;
     private ContactsAdapter mAdapter;
+    private Context context;
 
     //Declare lists to be filled with Data from Add Contact Activity
     public static ArrayList<String> nameList = new ArrayList<>();
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.context = context;
 
         mRecyclerView = findViewById(R.id.recyclerView);
 
@@ -51,17 +55,32 @@ public class MainActivity extends AppCompatActivity {
 
         //Listen for the intent
         Intent intent = getIntent();
-        String nameValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
-        String ageValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
+        String nameValue = intent.getStringExtra(AddContact.NAME_MESSAGE);
+        String ageValue = intent.getStringExtra(AddContact.AGE_MESSAGE);
         String colorValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
 
         nameList.add(nameValue);
         ageList.add(ageValue);
         colorList.add(colorValue);
 
+        Log.d(TAG, "nameValue = " + nameValue);
+
         // Run the method
         initializeData();
-        
+
+        // Save ArrayLists
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(nameList);
+        editor.putString(TAG, json);
+        editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     private void initializeData() {
