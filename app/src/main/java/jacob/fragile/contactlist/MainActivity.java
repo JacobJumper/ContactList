@@ -18,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     private ContactsAdapter mAdapter;
 
     //Declare lists to be filled with Data from Add Contact Activity
-    public static ArrayList<String> nameList;
-    public static ArrayList<String> ageList;
-    public static ArrayList<String> colorList;
+    public static ArrayList<String> nameList = new ArrayList<>();
+    public static ArrayList<String> ageList = new ArrayList<>();
+    public static ArrayList<String> colorList = new ArrayList<>();
 
 
     @Override
@@ -38,23 +38,24 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ContactsAdapter(this, mContacts);
         mRecyclerView.setAdapter(mAdapter);
 
-
-
         // Get the data.
         initializeData();
 
-        nameList.add("nameValue");
-        ageList.add("ageValue");
-        colorList.add("colorValue");
+        //Listen for the intent
+        Intent intent = getIntent();
+        String nameValue = intent.getStringExtra(AddContact.NAME_MESSAGE);
+        String ageValue = intent.getStringExtra(AddContact.AGE_MESSAGE);
+        String colorValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
+
+        nameList.add(nameValue);
+        ageList.add(ageValue);
+        colorList.add(colorValue);
+
 
     }
 
     private void initializeData() {
-        //Listen for the intent
-        /*Intent intent = getIntent();
-        String nameValue = intent.getStringExtra(AddContact.NAME_MESSAGE);
-        String ageValue = intent.getStringExtra(AddContact.AGE_MESSAGE);
-        String colorValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);*/
+
 
         // Get the data from the lists.
         String[] names = nameList.toArray(new String[nameList.size()]);

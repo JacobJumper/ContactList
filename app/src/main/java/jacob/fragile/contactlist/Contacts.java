@@ -1,10 +1,6 @@
 package jacob.fragile.contactlist;
 
-import android.os.Parcelable;
-
-import java.io.Serializable;
-
-public class Contacts implements Serializable {
+public class Contacts {
     private String name;
     private String age;
     private String color;
