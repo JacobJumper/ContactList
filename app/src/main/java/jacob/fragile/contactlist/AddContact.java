@@ -22,7 +22,6 @@ public class AddContact extends AppCompatActivity{
             "com.jacob.fragile.contactlist.extra.MESSAGE";
 
 
-    private ArrayList<Contacts> mContacts;
     private EditText nameEdit;
     private EditText ageEdit;
     private Spinner colorSpinner;
@@ -32,8 +31,6 @@ public class AddContact extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
-        //Set the contact arraylist
-        mContacts = new ArrayList<>();
 
         //Initialize the variables
         nameEdit = findViewById(R.id.nameEdit);
@@ -52,13 +49,14 @@ public class AddContact extends AppCompatActivity{
     }
 
     public void saveClick(View view) {
+
         String nameValue = nameEdit.getText().toString();
         String ageValue = ageEdit.getText().toString();
         String colorSpinnerValue = colorSpinner.getSelectedItem().toString();
 
        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(NAME_MESSAGE, nameValue);
-        intent.putExtra(AGE_MESSAGE, ageValue);
+        intent.putExtra(COLOR_MESSAGE, nameValue);
+        intent.putExtra(COLOR_MESSAGE, ageValue);
         intent.putExtra(COLOR_MESSAGE, colorSpinnerValue);
         startActivity(intent);
 

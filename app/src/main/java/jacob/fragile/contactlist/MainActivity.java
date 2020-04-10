@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,14 @@ import android.view.View;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    SharedPreferences sharedpreferences;
+    public static final String mypreference = "mypref";
+    public static final String Name = "nameKey";
+    public static final String Age = "ageKey";
+    public static final String Color = "colorKey";
+
+
 
     private ArrayList<Contacts> mContacts;
     private RecyclerView mRecyclerView;
@@ -38,24 +48,23 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new ContactsAdapter(this, mContacts);
         mRecyclerView.setAdapter(mAdapter);
 
-        // Get the data.
-        initializeData();
 
         //Listen for the intent
         Intent intent = getIntent();
-        String nameValue = intent.getStringExtra(AddContact.NAME_MESSAGE);
-        String ageValue = intent.getStringExtra(AddContact.AGE_MESSAGE);
+        String nameValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
+        String ageValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
         String colorValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
 
         nameList.add(nameValue);
         ageList.add(ageValue);
         colorList.add(colorValue);
 
-
+        // Run the method
+        initializeData();
+        
     }
 
     private void initializeData() {
-
 
         // Get the data from the lists.
         String[] names = nameList.toArray(new String[nameList.size()]);
