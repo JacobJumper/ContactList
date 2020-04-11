@@ -8,15 +8,19 @@
 
 
     <ImageView
-        android:layout_width="96dp"
         android:id="@+id/imageSelect"
-        android:layout_height="96dp"
-        android:adjustViewBounds="true"
-        app:layout_collapseMode="parallax"
-        app:layout_collapseParallaxMultiplier="0.7"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_margin="12dp"
+        android:adjustViewBounds="false"
+        android:padding="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="24dp"/>
+        app:srcCompat="@drawable/ic_photo"
+        tools:srcCompat="@drawable/ic_photo"
+        android:onClick="newImage"
+        android:src="@drawable/ic_photo" />
 
     <TextView
         android:id="@+id/nameHolder"

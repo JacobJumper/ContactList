@@ -68,19 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // Run the method
         initializeData();
 
-        // Save ArrayLists
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(nameList);
-        editor.putString(TAG, json);
-        editor.commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+        // Save ArrayList
     }
 
     private void initializeData() {

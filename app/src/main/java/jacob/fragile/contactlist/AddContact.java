@@ -1,9 +1,13 @@
 package jacob.fragile.contactlist;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,12 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 
 public class AddContact extends AppCompatActivity{
 
+    // Bundle messages
     private static final String TAG = "MyActivity";
-
+    private Context mContext;
     public static final String AGE_MESSAGE =
             "com.jacob.fragile.contactlist.extra.NAME_MESSAGE";
     public static final String NAME_MESSAGE =
@@ -24,11 +28,14 @@ public class AddContact extends AppCompatActivity{
     public static final String COLOR_MESSAGE =
             "com.jacob.fragile.contactlist.extra.COLOR_MESSAGE";
 
+    // Gallery Load static variable
+    private static int RESULT_LOAD_IMAGE = 100;
+    Uri imageUri;
 
     private EditText nameEdit;
     private EditText ageEdit;
     private Spinner colorSpinner;
-    private ImageView imageSelect;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,7 @@ public class AddContact extends AppCompatActivity{
         nameEdit = findViewById(R.id.nameEdit);
         ageEdit = findViewById(R.id.ageEdit);
         colorSpinner = findViewById(R.id.colorSpinner);
-        imageSelect = findViewById(R.id.imageSelect);
+        imageView = findViewById(R.id.imageSelect);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -49,14 +56,39 @@ public class AddContact extends AppCompatActivity{
         // Apply the adapter to the spinner
         colorSpinner.setAdapter(adapter);
 
+        // Set onClick listener for images
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+
+        });
+    }
+
+    private void openGallery() {
+        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(gallery, RESULT_LOAD_IMAGE);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == RESULT_LOAD_IMAGE){
+            imageUri = data.getData();
+            imageView.setImageURI(imageUri);
+        }
     }
 
     public void saveClick(View view) {
 
+        // Take the editText values and convert to usable strings
         String nameValue = nameEdit.getText().toString();
         String ageValue = ageEdit.getText().toString();
         String colorSpinnerValue = colorSpinner.getSelectedItem().toString();
 
+        // Bundle usable strings and send to MainActivity
        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(NAME_MESSAGE, nameValue);
         intent.putExtra(AGE_MESSAGE, ageValue);
@@ -67,5 +99,8 @@ public class AddContact extends AppCompatActivity{
     }
 
     public void deleteClick(View view) {
+    }
+
+    public void newImage(View view) {
     }
 }
