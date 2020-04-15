@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,6 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import okio.Utf8;
 
 
 public class AddContact extends AppCompatActivity{
@@ -27,10 +34,15 @@ public class AddContact extends AppCompatActivity{
             "com.jacob.fragile.contactlist.extra.AGE_MESSAGE";
     public static final String COLOR_MESSAGE =
             "com.jacob.fragile.contactlist.extra.COLOR_MESSAGE";
+    public static final String PHOTO_MESSAGE =
+            "com.jacob.fragile.contactlist.extra.PHOTO_MESSAGE";
+
 
     // Gallery Load static variable
     private static int RESULT_LOAD_IMAGE = 100;
     Uri imageUri;
+
+    //TODO: Convert image as bytecode and send with activity
 
     private EditText nameEdit;
     private EditText ageEdit;
@@ -66,18 +78,19 @@ public class AddContact extends AppCompatActivity{
         });
     }
 
+    // Open gallery method
     private void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, RESULT_LOAD_IMAGE);
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == RESULT_LOAD_IMAGE){
+        if (resultCode == RESULT_OK && requestCode == RESULT_LOAD_IMAGE) {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
+
         }
     }
 
@@ -93,6 +106,8 @@ public class AddContact extends AppCompatActivity{
         intent.putExtra(NAME_MESSAGE, nameValue);
         intent.putExtra(AGE_MESSAGE, ageValue);
         intent.putExtra(COLOR_MESSAGE, colorSpinnerValue);
+        intent.putExtra(PHOTO_MESSAGE, imageUri.toString());
+
         Log.d(TAG, "nameValue = " + nameValue);
         startActivity(intent);
 

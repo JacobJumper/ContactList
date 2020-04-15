@@ -67,7 +67,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             age.setText(contacts.getAge());
             color.setText(contacts.getColor());
             //Load in the images
-            Glide.with(mContext).load(contacts.getImageResource()).into(imageView);
+            Glide.with(mContext).load(contacts.getImage()).into(imageView);
 
         }
     }

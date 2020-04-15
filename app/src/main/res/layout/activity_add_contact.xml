@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageSelect"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="128pt"
+        android:layout_height="128pt"
         android:layout_margin="12dp"
         android:adjustViewBounds="false"
         android:padding="48dp"
