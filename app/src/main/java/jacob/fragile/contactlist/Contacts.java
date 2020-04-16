@@ -6,9 +6,9 @@ public class Contacts {
     private String name;
     private String age;
     private String color;
-    private  Uri image;
+    private  String image;
 
-    Contacts(String name, String age, String color, Uri image){
+    Contacts(String name, String age, String color, String image){
         this.name = name;
         this.age = age;
         this.color = color;
@@ -20,7 +20,7 @@ public class Contacts {
      * @return The imageResource.
      */
 
-    Uri getImage(){ return image; }
+    String getImage(){ return image; }
     /**
      * Gets the name of the contact.
      *
@@ -36,6 +36,12 @@ public class Contacts {
     String getAge() {
         return age;
     }
+
+    /**
+     * Gets the  color of the contact.
+     *
+     * @return The color.
+     */
 
     String getColor() { return color; }
 }

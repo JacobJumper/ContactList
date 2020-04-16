@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> nameList = new ArrayList<>();
     public static ArrayList<String> ageList = new ArrayList<>();
     public static ArrayList<String> colorList = new ArrayList<>();
-    public static ArrayList<Uri> imageList = new ArrayList<>();
+    public static ArrayList<String> imageList = new ArrayList<>();
 
 
     @Override
@@ -57,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
         String nameValue = intent.getStringExtra(AddContact.NAME_MESSAGE);
         String ageValue = intent.getStringExtra(AddContact.AGE_MESSAGE);
         String colorValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
+        String imageString = intent.getStringExtra(AddContact.PHOTO_MESSAGE);
         // Convert the URI String back into an image
-        Uri imageUri = intent.getParcelableExtra(AddContact.PHOTO_MESSAGE);
         //TODO: Import byteValue from intent
 
         nameList.add(nameValue);
         ageList.add(ageValue);
         colorList.add(colorValue);
-        imageList.add(imageUri);
+        imageList.add(imageString);
         Log.d(TAG, "nameValue = " + nameValue);
 
         // Run the method
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         String[] names = nameList.toArray(new String[nameList.size()]);
         String[] age = ageList.toArray(new String[ageList.size()]);
         String[] color = colorList.toArray(new String[colorList.size()]);
-        Uri [] images = imageList.toArray(new Uri[imageList.size()]);
+        String [] images = imageList.toArray(new String[imageList.size()]);
             // Clear the existing data (to avoid duplication).
             mContacts.clear();
 

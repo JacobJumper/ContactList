@@ -90,7 +90,6 @@ public class AddContact extends AppCompatActivity{
         if (resultCode == RESULT_OK && requestCode == RESULT_LOAD_IMAGE) {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
-
         }
     }
 
@@ -100,13 +99,16 @@ public class AddContact extends AppCompatActivity{
         String nameValue = nameEdit.getText().toString();
         String ageValue = ageEdit.getText().toString();
         String colorSpinnerValue = colorSpinner.getSelectedItem().toString();
+        String imageString = imageUri.toString();
+        Log.w(TAG, "Image string = " + imageString);
 
         // Bundle usable strings and send to MainActivity
        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(NAME_MESSAGE, nameValue);
         intent.putExtra(AGE_MESSAGE, ageValue);
         intent.putExtra(COLOR_MESSAGE, colorSpinnerValue);
-        intent.putExtra(PHOTO_MESSAGE, imageUri.toString());
+        intent.putExtra(PHOTO_MESSAGE, imageString);
+
 
         Log.d(TAG, "nameValue = " + nameValue);
         startActivity(intent);
