@@ -37,6 +37,15 @@ public class AddContact extends AppCompatActivity{
     public static final String PHOTO_MESSAGE =
             "com.jacob.fragile.contactlist.extra.PHOTO_MESSAGE";
 
+    public static final String AGE_DELETE_MESSAGE =
+            "com.jacob.fragile.contactlist.extra.NAME_DELETE_MESSAGE";
+    public static final String NAME_DELETE_MESSAGE =
+            "com.jacob.fragile.contactlist.extra.AGE_DELTE_MESSAGE";
+    public static final String COLOR_DELETE_MESSAGE =
+            "com.jacob.fragile.contactlist.extra.COLOR_DELETE_MESSAGE";
+    public static final String PHOTO_DELETE_MESSAGE =
+            "com.jacob.fragile.contactlist.extra.PHOTO_DELETE_MESSAGE";
+
 
     // Gallery Load static variable
     private static int RESULT_LOAD_IMAGE = 100;
@@ -112,6 +121,7 @@ public class AddContact extends AppCompatActivity{
     }
 
     public void deleteClick(View view) {
+        
     }
 
 }

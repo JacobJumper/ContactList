@@ -11,12 +11,14 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "RecyclerViewAdapter";
 
-    private ArrayList<Contacts> mContacts;
+    private ArrayList mContacts;
     private RecyclerView mRecyclerView;
     private ContactsAdapter mAdapter;
+    private Context mContext;
 
     //Declare lists to be filled with Data from Add Contact Activity
     public static ArrayList<String> nameList = new ArrayList<>();
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        this.mContext = mContext;
+        onLoad();
         mRecyclerView = findViewById(R.id.recyclerView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         // Set the visibility of cards when lists contain no data
-        if (mContacts.isEmpty()) {
-            mRecyclerView.setVisibility(View.GONE);
-        }
-
 
         //Listen for the intent
         Intent intent = getIntent();
@@ -68,12 +68,44 @@ public class MainActivity extends AppCompatActivity {
         ageList.add(ageValue);
         colorList.add(colorValue);
         imageList.add(imageString);
+
         Log.d(TAG, "nameValue = " + nameValue);
 
         // Run the method
         initializeData();
 
-        // Save ArrayList
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        onSave();
+    }
+
+    private void onSave(){
+        SharedPreferences prefs = getSharedPreferences("List", Context.MODE_PRIVATE);
+        //save the user list to preference
+        SharedPreferences.Editor editor = prefs.edit();
+        try {
+            editor.putString("ContactList", ObjectSerializer.serialize(mContacts));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        editor.commit();
+
+    }
+    private void onLoad(){
+    // Load user List from preferences
+        SharedPreferences prefs = getSharedPreferences("User", Context.MODE_PRIVATE);
+        try {
+            mContacts = (ArrayList) ObjectSerializer.deserialize(prefs.getString("ContactList", ObjectSerializer.serialize(new ArrayList())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void initializeData() {
