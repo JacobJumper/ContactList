@@ -1,6 +1,7 @@
 package jacob.fragile.contactlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     @Override
     public int getItemCount() {return mContacts.size();}
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView imageView;
         TextView name;
@@ -60,12 +61,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             age = itemView.findViewById(R.id.age);
             color = itemView.findViewById(R.id.color);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mContacts.remove(getAdapterPosition());
-                }
-            });
+            itemView.setOnClickListener(this);
         }
 
         void bindTo(Contacts contacts) {
@@ -75,6 +71,19 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             color.setText(contacts.getColor());
             //Load in the images
             Glide.with(mContext).load(contacts.getImage()).into(imageView);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            Contacts currentContact = mContacts.get(getAdapterPosition());
+            Intent contactIntent = new Intent(mContext, AddContact.class);
+            contactIntent.putExtra("name", currentContact.getName());
+            contactIntent.putExtra("age", currentContact.getAge());
+            contactIntent.putExtra("color", currentContact.getColor());
+            contactIntent.putExtra("image", currentContact.getImage());
+            mContext.startActivity(contactIntent);
+
 
         }
     }
