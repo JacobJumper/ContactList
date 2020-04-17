@@ -59,6 +59,13 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             name = itemView.findViewById(R.id.name);
             age = itemView.findViewById(R.id.age);
             color = itemView.findViewById(R.id.color);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContacts.remove(getAdapterPosition());
+                }
+            });
         }
 
         void bindTo(Contacts contacts) {

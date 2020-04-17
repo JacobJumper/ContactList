@@ -1,5 +1,6 @@
 package jacob.fragile.contactlist;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.bumptech.glide.load.engine.Resource;
 
 public class AddContact extends AppCompatActivity{
 
@@ -121,7 +124,10 @@ public class AddContact extends AppCompatActivity{
     }
 
     public void deleteClick(View view) {
-        
+        nameEdit.getText().clear();
+        ageEdit.getText().clear();
+        colorSpinner.setSelection(0);
+        imageView.setImageResource(R.drawable.ic_photo);
     }
 
 }
