@@ -10,20 +10,20 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import okio.Utf8;
-
+import android.widget.Toast;
 
 public class AddContact extends AppCompatActivity{
+
+    /*
+    All Log messages are for debugging purposes only
+     */
 
     // Bundle messages
     private static final String TAG = "MyActivity";
@@ -41,8 +41,6 @@ public class AddContact extends AppCompatActivity{
     // Gallery Load static variable
     private static int RESULT_LOAD_IMAGE = 100;
     Uri imageUri;
-
-    //TODO: Convert image as bytecode and send with activity
 
     private EditText nameEdit;
     private EditText ageEdit;
@@ -103,21 +101,17 @@ public class AddContact extends AppCompatActivity{
         Log.w(TAG, "Image string = " + imageString);
 
         // Bundle usable strings and send to MainActivity
-       Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(NAME_MESSAGE, nameValue);
         intent.putExtra(AGE_MESSAGE, ageValue);
         intent.putExtra(COLOR_MESSAGE, colorSpinnerValue);
         intent.putExtra(PHOTO_MESSAGE, imageString);
 
-
         Log.d(TAG, "nameValue = " + nameValue);
         startActivity(intent);
-
     }
 
     public void deleteClick(View view) {
     }
 
-    public void newImage(View view) {
-    }
 }

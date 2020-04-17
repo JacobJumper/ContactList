@@ -14,6 +14,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Contacts> mContacts;
     private RecyclerView mRecyclerView;
     private ContactsAdapter mAdapter;
-    private Context context;
 
     //Declare lists to be filled with Data from Add Contact Activity
     public static ArrayList<String> nameList = new ArrayList<>();
@@ -38,19 +41,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.context = context;
-
         mRecyclerView = findViewById(R.id.recyclerView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         mContacts = new ArrayList<>();
 
+        // Set the adapter
         mAdapter = new ContactsAdapter(this, mContacts);
         mRecyclerView.setAdapter(mAdapter);
 
+        // Set the visibility of cards when lists contain no data
+        if (mContacts.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+        }
 
-        //TODO: Set sharedPref values for save/load
 
         //Listen for the intent
         Intent intent = getIntent();
@@ -58,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
         String ageValue = intent.getStringExtra(AddContact.AGE_MESSAGE);
         String colorValue = intent.getStringExtra(AddContact.COLOR_MESSAGE);
         String imageString = intent.getStringExtra(AddContact.PHOTO_MESSAGE);
-        // Convert the URI String back into an image
-        //TODO: Import byteValue from intent
-
+        // Add values to ArrayLists
         nameList.add(nameValue);
         ageList.add(ageValue);
         colorList.add(colorValue);
@@ -86,11 +89,12 @@ public class MainActivity extends AppCompatActivity {
             // Create the ArrayList of contacts  with names and
             // ages.
             for(int i=0;i<names.length;i++){
-                mContacts.add(new Contacts(names[i],age[i], color[i], images[i]));
+                mContacts.add(new Contacts(names[i], age[i], color[i], images[i]));
             }
 
             // Notify the adapter of the change.
             mAdapter.notifyDataSetChanged();
+            mRecyclerView.setVisibility(View.VISIBLE);
 
         }
 
@@ -98,5 +102,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddContact.class);
         startActivity(intent);
     }
+
 
 }
